@@ -1,3 +1,69 @@
 @use "./variables.scss" as *;
 
 // put your custom CSS here!
+.explorer-content ul li > a {
+  color: var(--darkgray);
+  opacity: 0.8;
+  pointer-events: all;
+}
+.explorer-content ul li > a.active {
+  opacity: 1;
+  color: var(--secondary);
+}
+
+.page-title a {
+  color: var(--dark);  
+}
+
+.page-title a:hover {
+  color: var(--dark);  
+}
+
+.breadcrumb-container a {
+  color: var(--darkgray);
+  opacity: 0.8;
+}
+
+.folder-container div > a,
+.folder-container div > button span,
+.folder-icon {
+  color: var(--dark);
+}
+
+body {
+  background-color: var(--lightgray);
+}
+
+.sidebar {
+  background-color: transparent;
+}
+
+.center {
+  background-color: var(--light);
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-top: 2.5rem;
+}
+
+.search > .search-button {
+  border-color: var(--gray);
+  border-radius: 8px;
+}
+
+.search > .search-container > .search-space > input {
+  border-color: var(--gray);
+  border-radius: 8px;
+}
+
+.note-properties {
+  border-color: var(--gray);
+}
+
+.note-properties[open] > .note-properties-header {
+  border-bottom-color: var(--gray);
+}
+
+.page-header {
+  margin-top: 2rem;
+}

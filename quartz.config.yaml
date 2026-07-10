@@ -22,7 +22,7 @@ configuration:
     colors:
       lightMode:
         light: "#faf9f5"
-        lightgray: "#e8e6dc"
+        lightgray: "#efede6"
         gray: "#b0aea5"
         darkgray: "#3d3d3a"
         dark: "#141413"
@@ -31,11 +31,11 @@ configuration:
         highlight: rgba(143, 159, 169, 0.15)
         textHighlight: "#fff23688"
       darkMode:
-        light: "#141413"
-        lightgray: "#393639"
-        gray: "#646464"
-        darkgray: "#d4d4d4"
-        dark: "#ebebec"
+        light: "#1f1f1f"
+        lightgray: "#0f0f0f"
+        gray: "#4d4c49"
+        darkgray: "#e3e3e3"
+        dark: "#faf9f5"
         secondary: "#d97757"
         tertiary: "#7a4636"
         highlight: rgba(143, 159, 169, 0.15)
