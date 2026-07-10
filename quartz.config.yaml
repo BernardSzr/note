@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: Quartz 5
+  pageTitle: "Bernard’s Notebook"
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: false
@@ -16,8 +16,9 @@ configuration:
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
-      header: Schibsted Grotesk
-      body: Source Sans Pro
+      title: Josefin Slab
+      header: Noto Serif SC
+      body: Noto Serif SC
       code: IBM Plex Mono
     colors:
       lightMode:
@@ -99,7 +100,15 @@ plugins:
     enabled: false
     order: 92
   - source: github:quartz-community/fonts
-    enabled: true
+    enabled: false
+    # options:
+    #   fontOrigin: googleFonts
+    #   title:
+    #     name: Josefin Slab
+    #     weights: [700]
+    #   header: Lora
+    #   body: Lora
+    #   code: IBM Plex Mono     
   - source: github:quartz-community/remove-draft
     enabled: true
   - source: github:quartz-community/explicit-publish
@@ -144,6 +153,11 @@ plugins:
     enabled: true
   - source: github:quartz-community/explorer
     enabled: true
+    options:
+      title: Atlas
+      folderClickBehavior: link # "link" to navigate or "collapse" to toggle
+      folderDefaultState: collapsed # "collapsed" or "open"
+      useSavedState: true
     layout:
       position: left
       priority: 50

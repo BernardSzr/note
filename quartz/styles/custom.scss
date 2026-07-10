@@ -20,8 +20,7 @@
 }
 
 .breadcrumb-container a {
-  color: var(--darkgray);
-  opacity: 0.8;
+  color: var(--secondary);
 }
 
 .folder-container div > a,
@@ -36,6 +35,8 @@ body {
 
 .sidebar {
   background-color: transparent;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 .center {
@@ -66,4 +67,38 @@ body {
 
 .page-header {
   margin-top: 2rem;
+}
+
+// 隐藏 Explorer 标题按钮
+.explorer button.desktop-explorer,  // 桌面端的 Explorer 标题按钮
+.explorer button.mobile-explorer {  // 移动端的 Explorer 标题按钮
+  display: none;                    // 完全隐藏元素，不占空间
+}
+
+// 始终展开内容
+.explorer-content {                 // Explorer 下的内容容器
+  display: block !important;        // 强制显示为块级元素（覆盖可能的 display: none）
+  visibility: visible !important;   // 强制可见（覆盖可能的 visibility: hidden）
+  transform: none !important;       // 移除可能的位移动画（如移动端的 slide 效果）
+}
+
+footer {
+  text-align: center;
+
+  ul {
+    justify-content: center;
+  }
+}
+
+.footnotes,
+tr {
+  border-color: var(--lightgray);
+}
+
+th {
+  border-bottom-color: var(--lightgray);
+}
+
+hr {
+  background-color: var(--lightgray);
 }
