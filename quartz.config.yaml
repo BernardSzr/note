@@ -16,7 +16,9 @@ configuration:
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
-      title: Josefin Slab
+      title:
+        name: Josefin Slab
+        weights: [700]
       header: Noto Serif SC
       body: Noto Serif SC
       code: IBM Plex Mono
@@ -101,14 +103,6 @@ plugins:
     order: 92
   - source: github:quartz-community/fonts
     enabled: false
-    # options:
-    #   fontOrigin: googleFonts
-    #   title:
-    #     name: Josefin Slab
-    #     weights: [700]
-    #   header: Lora
-    #   body: Lora
-    #   code: IBM Plex Mono     
   - source: github:quartz-community/remove-draft
     enabled: true
   - source: github:quartz-community/explicit-publish
