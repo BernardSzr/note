@@ -70,16 +70,15 @@ body {
 }
 
 // 隐藏 Explorer 标题按钮
-.explorer button.desktop-explorer,  // 桌面端的 Explorer 标题按钮
-.explorer button.mobile-explorer {  // 移动端的 Explorer 标题按钮
+.explorer button.desktop-explorer {  // 桌面端的 Explorer 标题按钮
   display: none;                    // 完全隐藏元素，不占空间
 }
 
 // 始终展开内容
 .explorer-content {                 // Explorer 下的内容容器
   display: block !important;        // 强制显示为块级元素（覆盖可能的 display: none）
-  visibility: visible !important;   // 强制可见（覆盖可能的 visibility: hidden）
-  transform: none !important;       // 移除可能的位移动画（如移动端的 slide 效果）
+  //visibility: visible !important;   // 强制可见（覆盖可能的 visibility: hidden）
+  //transform: none !important;       // 移除可能的位移动画（如移动端的 slide 效果）
 }
 
 footer {
@@ -106,6 +105,10 @@ hr {
 
 .page-title {
   font-weight: 700;
+}
+
+body {
+  font-weight: 500;
 }
 
 // GitHub 图标（文字消失，图标取代）
