@@ -2,7 +2,7 @@
 configuration:
   pageTitle: "Bernard’s Notebook"
   pageTitleSuffix: ""
-  enableSPA: false
+  enableSPA: true
   enablePopovers: false
   analytics:
     provider: plausible
