@@ -34,17 +34,30 @@ body {
 }
 
 .sidebar {
-  background-color: transparent;
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  background-color: var(--lightgray);
+
+  @media #{$desktop} {
+    background-color: transparent;
+    // padding-top: 3rem;
+    // padding-bottom: 3rem;
+  }
 }
 
 .center {
   background-color: var(--light);
-  box-sizing: border-box;
-  border-radius: 8px;
-  padding: 2rem;
-  margin-top: 2.5rem;
+
+  @media #{$desktop} {
+    box-sizing: border-box;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-top: 0.5rem;
+  }
+}
+
+.page-header {
+  @media #{$desktop} {
+    margin-top: 1.5rem;
+  }
 }
 
 .search > .search-button {
@@ -63,10 +76,6 @@ body {
 
 .note-properties[open] > .note-properties-header {
   border-bottom-color: var(--gray);
-}
-
-.page-header {
-  margin-top: 2rem;
 }
 
 // 隐藏 Explorer 标题按钮
@@ -104,7 +113,7 @@ hr {
 }
 
 .page-title {
-  font-weight: 700;
+  font-weight: 400;
 }
 
 body {
