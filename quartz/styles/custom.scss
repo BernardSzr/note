@@ -79,14 +79,47 @@ body {
 }
 
 // 隐藏 Explorer 标题按钮
-.explorer button.desktop-explorer {  // 桌面端的 Explorer 标题按钮
-  display: none;                    // 完全隐藏元素，不占空间
+.explorer button.desktop-explorer {
+  display: none;
 }
 
 // 桌面端始终展开内容
 .explorer-content {
   @media #{$desktop} {
     display: block !important;
+    position: static !important;
+    transform: none !important;
+    visibility: visible !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    padding: 0 !important;
+    z-index: auto !important;
+    background-color: transparent !important;
+  }
+}
+
+// 桌面端重置 explorer collapsed 状态
+.explorer {
+  @media #{$desktop} {
+    flex: 0 1 auto !important;
+    order: unset !important;
+    height: unset !important;
+    overflow: unset !important;
+  }
+}
+
+.explorer.collapsed {
+  @media #{$desktop} {
+    flex: 0 1 auto !important;
+  }
+}
+
+.explorer.collapsed > .explorer-content {
+  @media #{$desktop} {
+    transform: none !important;
+    visibility: visible !important;
   }
 }
 
@@ -134,5 +167,138 @@ footer ul li a[href*="github"] {
     mask-size: contain;
     -webkit-mask-image: url('data:image/svg+xml; utf8, <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>');
     -webkit-mask-size: contain;
+  }
+}
+
+// 移动端样式（≤1200px）- 覆盖插件硬编码的800px断点
+@media all and (max-width: 1200px) {
+  // 自定义移动端样式
+  .page > #quartz-body {
+    padding: 0;
+  }
+
+  .center {
+    box-sizing: border-box;
+    padding: 0 1rem;
+  }
+
+  .sidebar.left {
+    box-sizing: border-box;
+    padding: 1rem 5px 1rem 0;
+  }
+
+  .sidebar.right {
+    box-sizing: border-box;
+    padding: 0 1rem;
+    max-width: $sidePanelWidth;
+  }
+
+  .explorer:not(.collapsed) .explorer-content {
+    padding-left: 1rem;
+  }
+
+  // 覆盖插件硬编码的800px断点
+  .page > #quartz-body > :not(.sidebar.left:has(.explorer)) {
+    transition: transform 300ms ease-in-out;
+  }
+
+  .page > #quartz-body.lock-scroll > :not(.sidebar.left:has(.explorer)) {
+    transform: translateX(100dvw);
+    transition: transform 300ms ease-in-out;
+  }
+
+  .page > #quartz-body .sidebar.left:has(.explorer) {
+    box-sizing: border-box;
+    position: sticky;
+    background-color: var(--lightgray);
+    padding: 5px 5px 5px 0;
+    margin: 0;
+  }
+
+  .page > #quartz-body .hide-until-loaded ~ .explorer-content {
+    display: none;
+  }
+
+  .explorer {
+    order: -1;
+    height: initial;
+    overflow: hidden;
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  .explorer .explorer-content {
+    box-sizing: border-box;
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 0;
+    background-color: var(--lightgray);
+    max-width: 100vw;
+    width: 100vw;
+    transform: translateX(-100vw);
+    transition:
+      transform 200ms ease,
+      visibility 200ms ease;
+    overflow: hidden;
+    padding: 4rem 0 2rem 0;
+    height: 100dvh;
+    max-height: 100dvh;
+    visibility: hidden;
+  }
+
+  .explorer .mobile-explorer {
+    margin: 0;
+    padding: 5px;
+    z-index: 101;
+  }
+
+  .explorer .mobile-explorer.hide-until-loaded {
+    display: none;
+  }
+
+  .explorer .mobile-explorer .lucide-menu {
+    stroke: var(--darkgray);
+  }
+
+  .explorer button.mobile-explorer {
+    display: flex;
+  }
+
+  .explorer button.desktop-explorer {
+    display: none;
+  }
+
+  .explorer.collapsed {
+    flex: 0 0 34px;
+  }
+
+  .explorer.collapsed > .explorer-content {
+    transform: translateX(-100vw);
+    visibility: hidden;
+  }
+
+  .explorer:not(.collapsed) {
+    flex: 0 0 34px;
+  }
+
+  .explorer:not(.collapsed) > .explorer-content {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  .mobile-no-scroll .explorer-content > .explorer-ul {
+    overscroll-behavior: contain;
+  }
+
+  .search {
+    flex-grow: 0.3;
+  }
+
+  .graph > .graph-outer {
+    width: 90%;
   }
 }
