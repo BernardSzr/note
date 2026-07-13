@@ -172,6 +172,11 @@ footer ul li a[href*="github"] {
 
 // 移动端样式（≤1200px）- 覆盖插件硬编码的800px断点
 @media all and (max-width: 1200px) {
+  // 隐藏右侧边栏
+  .sidebar.right {
+    display: none !important;
+  }
+
   // 自定义移动端样式
   .page > #quartz-body {
     padding: 0;
