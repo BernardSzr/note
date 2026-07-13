@@ -177,6 +177,11 @@ footer ul li a[href*="github"] {
     display: none !important;
   }
 
+  // 隐藏弹窗
+  .popover {
+    display: none !important;
+  }
+
   // 自定义移动端样式
   .page > #quartz-body {
     padding: 0;
