@@ -46,16 +46,16 @@ main {
   --color-btn-active-border: #4d4c49; /* gray */
   --color-btn-selected-bg: #0f0f0f; /* lightgray */
   --color-btn-primary-text: #fff;
-  --color-btn-primary-bg: #d97757; /* secondary */
+  --color-btn-primary-bg: #788c5d; /* secondary */
   --color-btn-primary-border: rgb(250 249 245 / 10%); /* dark */
   --color-btn-primary-shadow: 0 0 transparent;
   --color-btn-primary-inset-shadow: 0 0 transparent;
-  --color-btn-primary-hover-bg: #c0654a; /* secondary 深一点 */
+  --color-btn-primary-hover-bg: #6a7a52; /* secondary 深一点 */
   --color-btn-primary-hover-border: rgb(250 249 245 / 10%); /* dark */
-  --color-btn-primary-selected-bg: #c0654a; /* secondary 深一点 */
+  --color-btn-primary-selected-bg: #6a7a52; /* secondary 深一点 */
   --color-btn-primary-selected-shadow: 0 0 transparent;
   --color-btn-primary-disabled-text: rgba(255, 255, 255, 0.5);
-  --color-btn-primary-disabled-bg: #7a4636; /* tertiary */
+  --color-btn-primary-disabled-bg: #C1CBA4; /* tertiary */
   --color-btn-primary-disabled-border: rgb(250 249 245 / 10%);
   --color-action-list-item-default-hover-bg: rgb(77 76 73 / 30%); /* gray */
   --color-segmented-control-bg: rgb(77 76 73 / 20%); /* gray */
@@ -71,10 +71,10 @@ main {
   --color-border-default: #4d4c49; /* gray */
   --color-border-muted: #0f0f0f; /* lightgray */
   --color-neutral-muted: rgb(77 76 73 / 30%); /* gray */
-  --color-accent-fg: #d97757; /* secondary */
-  --color-accent-emphasis: #d97757; /* secondary */
-  --color-accent-muted: rgb(217 119 87 / 40%); /* secondary */
-  --color-accent-subtle: rgba(122, 70, 54, 0.3); /* tertiary */
+  --color-accent-fg: #788c5d; /* secondary */
+  --color-accent-emphasis: #788c5d; /* secondary */
+  --color-accent-muted: rgb(120 140 93 / 40%); /* secondary */
+  --color-accent-subtle: rgba(193, 203, 164, 0.3); /* tertiary */
   --color-success-fg: #3fb950;
   --color-attention-fg: #d29922;
   --color-attention-muted: rgb(187 128 9 / 40%);

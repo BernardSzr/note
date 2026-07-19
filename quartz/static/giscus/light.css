@@ -46,16 +46,16 @@ main {
   --color-btn-active-border: rgb(20, 20, 19 / 15%);
   --color-btn-selected-bg: #efede6; /* lightgray */
   --color-btn-primary-text: #fff;
-  --color-btn-primary-bg: #d97757; /* secondary */
+  --color-btn-primary-bg: #788c5d; /* secondary */
   --color-btn-primary-border: rgb(20, 20, 19 / 15%); /* dark */
   --color-btn-primary-shadow: 0 1px 0 rgb(31 35 40 / 10%);
   --color-btn-primary-inset-shadow: inset 0 1px 0 rgb(255 255 255 / 3%);
-  --color-btn-primary-hover-bg: #c0654a; /* secondary 深一点 */
+  --color-btn-primary-hover-bg: #6a7a52; /* secondary 深一点 */
   --color-btn-primary-hover-border: rgb(20, 20, 19 / 15%); /* dark */
-  --color-btn-primary-selected-bg: #c0654a; /* secondary 深一点 */
+  --color-btn-primary-selected-bg: #6a7a52; /* secondary 深一点 */
   --color-btn-primary-selected-shadow: inset 0 1px 0 rgb(0 45 17 / 20%);
   --color-btn-primary-disabled-text: rgb(255 255 255 / 80%);
-  --color-btn-primary-disabled-bg: #e9b8a7; /* tertiary */
+  --color-btn-primary-disabled-bg: #C1CBA4; /* tertiary */
   --color-btn-primary-disabled-border: rgb(31 35 40 / 15%);
   --color-action-list-item-default-hover-bg: rgb(239 237 230 / 50%); /* lightgray */
   --color-segmented-control-bg: #efede6; /* lightgray */
@@ -71,10 +71,10 @@ main {
   --color-border-default: #b0aea5; /* gray */
   --color-border-muted: #efede6; /* lightgray */
   --color-neutral-muted: rgb(176 174 165 / 20%); /* gray */
-  --color-accent-fg: #d97757; /* secondary */
-  --color-accent-emphasis: #d97757; /* secondary */
-  --color-accent-muted: rgb(217 119 87 / 40%); /* secondary */
-  --color-accent-subtle: rgba(233, 184, 167, 0.3); /* tertiary */
+  --color-accent-fg: #788c5d; /* secondary */
+  --color-accent-emphasis: #788c5d; /* secondary */
+  --color-accent-muted: rgb(120 140 93 / 40%); /* secondary */
+  --color-accent-subtle: rgba(193, 203, 164, 0.3); /* tertiary */
   --color-success-fg: #1a7f37;
   --color-attention-fg: #9a6700;
   --color-attention-muted: rgb(212 167 44 / 40%);
