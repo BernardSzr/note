@@ -12,11 +12,11 @@
 }
 
 .page-title a {
-  color: var(--secondary);  
+  color: var(--dark);  
 }
 
 .page-title a:hover {
-  color: var(--secondary);  
+  color: var(--dark);  
 }
 
 .breadcrumb-container a {
@@ -146,12 +146,12 @@ hr {
 }
 
 .page-title {
-  font-weight: 400;
+  font-style: italic;
 }
 
-body {
-  font-weight: 500;
-}
+// body {
+//   font-weight: 500;
+// }
 
 // GitHub 图标（文字消失，图标取代）
 footer ul li a[href*="github"] {

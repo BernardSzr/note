@@ -17,12 +17,10 @@ configuration:
     cdnCaching: true
     typography:
       title:
-        name: IM Fell English
-        weights: [400]
-      header: Noto Serif SC
-      body: 
-        name: Noto Serif SC
-        weights: [400, 500, 600, 700]
+        name: Lora
+        includeItalic: true
+      header: Noto Sans SC
+      body: Noto Sans SC
       code: IBM Plex Mono
     colors:
       lightMode:
@@ -31,8 +29,8 @@ configuration:
         gray: "#b0aea5"
         darkgray: "#3d3d3a"
         dark: "#141413"
-        secondary: "#d97757"
-        tertiary: "#e9b8a7"
+        secondary: "#98A869"
+        tertiary: "#C1CBA4"
         highlight: rgba(143, 159, 169, 0.15)
         textHighlight: "#fff23688"
       darkMode:
@@ -41,8 +39,8 @@ configuration:
         gray: "#4d4c49"
         darkgray: "#e3e3e3"
         dark: "#faf9f5"
-        secondary: "#d97757"
-        tertiary: "#7a4636"
+        secondary: "#98A869"
+        tertiary: "#454D2D"
         highlight: rgba(143, 159, 169, 0.15)
         textHighlight: "#b3aa0288"
 plugins:
