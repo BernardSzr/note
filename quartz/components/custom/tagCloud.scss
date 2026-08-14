@@ -1,0 +1,38 @@
+.tag-cloud {
+  margin: 1.25rem 0 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--lightgray);
+}
+
+.tag-cloud-title {
+  margin: 0 0 0.75rem;
+  color: var(--darkgray);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.tag-cloud-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+
+  > a.internal.tag-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.8rem;
+    box-sizing: border-box;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    color: var(--darkgray);
+    background: var(--highlight);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--dark);
+      background: color-mix(in srgb, var(--highlight) 75%, var(--gray));
+    }
+  }
+}

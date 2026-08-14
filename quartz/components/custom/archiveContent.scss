@@ -1,0 +1,109 @@
+.archive-page {
+  margin-top: 1.5rem;
+}
+
+.archive-overview {
+  margin-bottom: 1.75rem;
+  color: var(--gray);
+  font-size: 0.9375rem;
+
+  p {
+    margin: 0;
+  }
+
+  strong {
+    color: var(--darkgray);
+    font-weight: 600;
+  }
+}
+
+.archive-groups {
+  border-top: 1px solid var(--lightgray);
+}
+
+.archive-year {
+  padding: 1.5rem 0 0.5rem;
+  border-bottom: 1px solid var(--lightgray);
+
+  > h2 {
+    margin: 0 0 0.9rem;
+    scroll-margin-top: 1.5rem;
+    color: var(--darkgray);
+    font-size: 1.25rem;
+    line-height: 1.35;
+  }
+}
+
+.archive-year-content {
+  padding-left: 1rem;
+}
+
+.archive-month {
+  padding: 0.35rem 0 1rem;
+
+  > h3 {
+    margin: 0 0 0.35rem;
+    scroll-margin-top: 1.5rem;
+    color: var(--darkgray);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+}
+
+.archive-list {
+  margin: 0 0 0 0.8rem;
+  padding: 0;
+  border-left: 1px solid var(--lightgray);
+  list-style: none;
+}
+
+.archive-item {
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.5rem 0 0.5rem 1rem;
+
+  h4 {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  h4 > a.internal {
+    color: var(--darkgray);
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--dark);
+    }
+  }
+}
+
+.archive-date {
+  margin: 0;
+  color: var(--gray);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+@media all and (max-width: 600px) {
+  .archive-year-content {
+    padding-left: 0.35rem;
+  }
+
+  .archive-list {
+    margin-left: 0.45rem;
+  }
+
+  .archive-item {
+    grid-template-columns: 1fr;
+    gap: 0.1rem;
+    padding: 0.55rem 0 0.55rem 0.8rem;
+  }
+}

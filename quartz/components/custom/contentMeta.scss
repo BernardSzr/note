@@ -1,0 +1,23 @@
+.content-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  margin-top: 0;
+  color: var(--darkgray);
+  font-size: 0.9rem;
+}
+
+.content-meta-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  white-space: nowrap;
+}
+
+.content-meta-label {
+  color: var(--gray);
+}
+
+.content-meta-date time {
+  color: var(--darkgray);
+}

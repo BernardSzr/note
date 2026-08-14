@@ -38,24 +38,153 @@ article :is(h1, h2, h3, h4, h5, h6),
   }
 }
 
+.page-title {
+  font-size: 2.2rem;
+}
+
 .page-title a {
+  display: inline-flex;
+  align-items: baseline;
   color: var(--dark);
+  font-weight: 700;
+  transition: transform 160ms ease;
+
+  &::after {
+    display: inline-block;
+    width: 1.125rem;
+    height: 0.1em;
+    margin-left: 0.1em;
+    background-color: color-mix(in srgb, var(--gray) 65%, white 35%);
+    content: "";
+    opacity: 1;
+    transform: translateY(0.12em);
+    animation: page-title-cursor-load 0.9s step-end 3;
+  }
+}
+
+.page-title.is-cursor-ready a::after {
+  animation: none;
 }
 
 .page-title a:hover {
   color: var(--dark);
 }
 
-// .breadcrumb-container {
-//   a,
-//   p {
-//     color: var(--darkgray);
-//   }
+@media (hover: hover) and (pointer: fine) {
+  .page-title.is-cursor-ready a:hover {
+    transform: translateX(2px);
 
-//   a:hover {
-//     color: var(--dark);
-//   }
-// }
+    &::after {
+      animation: page-title-cursor-hover 0.9s step-end 3;
+    }
+  }
+}
+
+.page-title.is-cursor-ready.is-spa-navigating a::after {
+  animation: page-title-cursor-nav 0.9s step-end 3;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .page-title.is-cursor-ready.is-spa-navigating a:hover::after {
+    animation: page-title-cursor-nav 0.9s step-end 3;
+  }
+}
+
+@keyframes page-title-cursor-load {
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes page-title-cursor-hover {
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes page-title-cursor-nav {
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-title a {
+    transition: none;
+
+    &::after,
+    &:hover::after {
+      opacity: 1;
+      animation: none;
+    }
+  }
+}
+
+.breadcrumb-container {
+  gap: 0.25rem;
+  font-size: 0.9375rem;
+
+  &:not(:has(.breadcrumb-element:nth-child(2))) {
+    display: none;
+  }
+
+  .breadcrumb-element:first-child {
+    display: none;
+  }
+
+  .breadcrumb-element {
+    a,
+    p {
+      color: var(--gray);
+      font-weight: 400;
+    }
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+      line-height: 1.4;
+
+      &::before {
+        content: "/";
+      }
+    }
+
+    a:hover {
+      color: var(--darkgray);
+    }
+
+    p {
+      display: none;
+    }
+  }
+
+  .breadcrumb-element:nth-child(2) a::before {
+    content: "~/";
+  }
+}
+
+.breadcrumb-container:has(.breadcrumb-element:nth-child(2)) + .article-title {
+  margin-top: 0.75rem;
+}
 
 article a.internal,
 article a.external {
@@ -186,6 +315,246 @@ article a.external .external-icon > path {
   }
 }
 
+// Let search consume the action row space left by the fixed-size controls.
+.sidebar.left > .flex-component:has(.search) {
+  width: 100%;
+  flex: 0 0 auto;
+  align-self: stretch;
+  justify-content: flex-start;
+  gap: 0.25rem !important;
+
+  > div:has(> .search) {
+    flex: 1 1 auto !important;
+    width: auto;
+    min-width: 0;
+  }
+
+  > div:has(> .darkmode) {
+    width: 34px;
+    min-width: 34px;
+    flex: 0 0 34px !important;
+  }
+
+  .search,
+  .search > .search-button {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    height: 34px;
+    box-sizing: border-box;
+  }
+
+  .search {
+    min-width: 0;
+  }
+
+  .search > .search-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 0.75rem 0 0;
+    border: 1px solid var(--lightgray) !important;
+    border-radius: 4px;
+    background: transparent;
+
+    > p {
+      display: inline;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    > svg {
+      width: 20px;
+      min-width: 20px;
+      height: 20px;
+      margin: 0 0.5rem;
+    }
+  }
+
+  > .tags-index-nav,
+  > .archive-index-nav,
+  > .mobile-toc {
+    flex: 0 0 34px;
+    width: 34px;
+  }
+
+  .darkmode {
+    display: inline-flex;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+
+    > svg {
+      position: static;
+      width: 20px;
+      height: 20px;
+      transform: none;
+    }
+  }
+}
+
+.mobile-actions-menu {
+  position: relative;
+  display: none;
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+
+  &[hidden] {
+    display: none !important;
+  }
+}
+
+.mobile-actions-menu-toggle {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  color: var(--darkgray);
+  background: transparent;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--dark);
+  }
+
+  > svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.mobile-actions-menu-panel {
+  position: absolute;
+  z-index: 103;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  display: flex;
+  width: 34px;
+  min-width: 34px;
+  max-width: 34px;
+  flex-direction: column;
+  gap: 0.25rem;
+  box-sizing: border-box;
+  align-items: center;
+  padding: 0.25rem 0;
+  border: 0;
+  border-radius: 6px;
+  background: var(--light);
+  box-shadow:
+    0 0 0 1px var(--lightgray),
+    0 8px 24px color-mix(in srgb, var(--dark) 12%, transparent);
+
+  &[aria-hidden="true"] {
+    display: none;
+  }
+
+  > div:has(> .search),
+  > div:has(> .darkmode),
+  > .tags-index-nav,
+  > .archive-index-nav {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    flex: 0 0 34px;
+    align-items: center;
+  }
+
+  > div:has(> .search) {
+    width: 34px;
+    flex-basis: 34px;
+
+    > .search {
+      width: 34px;
+      min-width: 34px;
+      max-width: 34px;
+    }
+
+    > .search > .search-button {
+      width: 34px;
+      min-width: 34px;
+      max-width: 34px;
+      height: 34px;
+      justify-content: center;
+      padding: 0;
+      border: 0 !important;
+      border-radius: 0;
+
+      > p {
+        display: none;
+      }
+
+      > svg {
+        margin: 0;
+      }
+    }
+  }
+
+  > div:has(> .darkmode) {
+    width: 34px;
+
+    .darkmode {
+      width: 34px;
+      height: 34px;
+    }
+  }
+
+  > .tags-index-nav > a,
+  > .archive-index-nav > a {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+.sidebar.left > .flex-component:has(.search) .mobile-actions-menu-panel > div:has(> .search) {
+  width: 34px !important;
+  min-width: 34px !important;
+  max-width: 34px !important;
+  flex: 0 0 34px !important;
+  align-items: center;
+  justify-content: center;
+
+  > .search,
+  > .search > .search-button {
+    width: 34px !important;
+    min-width: 34px !important;
+    max-width: 34px !important;
+  }
+
+  > .search > .search-button {
+    justify-content: center !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    > p {
+      display: none !important;
+    }
+
+    > svg {
+      margin: 0 !important;
+    }
+  }
+}
+
+@media all and (max-width: 1200px) {
+  .mobile-actions-menu.is-overflow {
+    display: flex;
+  }
+
+  .mobile-actions-menu-panel {
+    right: 0;
+  }
+}
+
 .explorer.collapsed > .explorer-content {
   @media #{$desktop} {
     transform: none !important;
@@ -218,6 +587,17 @@ th {
 
 hr {
   background-color: var(--lightgray);
+}
+
+body:is(
+    [data-slug="tags"],
+    [data-slug="tags/index"],
+    [data-slug="archives"],
+    [data-slug="archives/index"]
+  )
+  .center
+  > hr {
+  display: none;
 }
 
 // body {
@@ -268,10 +648,66 @@ footer ul li a[href*="github"] {
     padding: 1rem 5px 1rem 0;
   }
 
+  .sidebar.left > .flex-component:has(.search) {
+    --search-collapsed-size: 34px;
+
+    grid-column: 3;
+    grid-row: 1;
+    width: 100%;
+    min-width: 0;
+    align-items: center;
+    justify-self: end;
+    align-self: center;
+    justify-content: flex-end;
+    gap: 0.25rem !important;
+
+    > div:has(> .search) {
+      width: var(--search-collapsed-size);
+      min-width: var(--search-collapsed-size);
+      max-width: var(--search-collapsed-size);
+      flex: 0 0 var(--search-collapsed-size) !important;
+    }
+
+    .search,
+    .search > .search-button {
+      width: var(--search-collapsed-size);
+      min-width: var(--search-collapsed-size);
+      max-width: var(--search-collapsed-size);
+    }
+
+    .search > .search-button {
+      justify-content: center;
+      padding: 0;
+      border: 0 !important;
+      border-radius: 0;
+
+      > p {
+        display: none;
+      }
+
+      > svg {
+        margin: 0;
+      }
+    }
+  }
+
   .sidebar.right {
     box-sizing: border-box;
     padding: 0 1rem;
     max-width: $sidePanelWidth;
+  }
+
+  // Backlinks live in the normal page flow on mobile, so their list should
+  // hand wheel and touch scrolling back to the page instead of trapping it.
+  .page-footer .backlinks {
+    max-height: none;
+    overflow-y: visible;
+
+    > ul.overflow {
+      max-height: none;
+      overflow-y: visible;
+      overscroll-behavior: auto;
+    }
   }
 
   .explorer:not(.collapsed) .explorer-content {
@@ -291,9 +727,37 @@ footer ul li a[href*="github"] {
   .page > #quartz-body .sidebar.left:has(.explorer) {
     box-sizing: border-box;
     position: sticky;
+    display: grid;
+    grid-template-columns: 34px max-content minmax(0, 1fr);
+    grid-template-rows: 34px;
+    column-gap: 0.5rem;
+    align-items: center;
+    border-bottom: 1px solid color-mix(in srgb, var(--lightgray) 70%, transparent);
     background-color: var(--light);
-    padding: 5px 5px 5px 0;
+    padding: 5px 0;
     margin: 0;
+  }
+
+  .sidebar.left > .page-title {
+    grid-column: 2;
+    grid-row: 1;
+    width: max-content;
+    max-width: 100%;
+    min-width: 0;
+    overflow: visible;
+    padding: 0;
+    white-space: nowrap;
+  }
+
+  .sidebar.left > .page-title a {
+    display: block;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: nowrap;
+  }
+
+  .sidebar.left > .mobile-only > .spacer {
+    display: none;
   }
 
   .page > #quartz-body .hide-until-loaded ~ .explorer-content {
@@ -301,7 +765,9 @@ footer ul li a[href*="github"] {
   }
 
   .explorer {
-    order: -1;
+    grid-column: 1;
+    grid-row: 1;
+    order: 0;
     height: initial;
     overflow: hidden;
     flex-shrink: 0;
@@ -332,17 +798,25 @@ footer ul li a[href*="github"] {
   }
 
   .explorer .mobile-explorer {
+    box-sizing: border-box;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
     margin: 0;
-    padding: 5px;
+    padding: 7px;
     z-index: 101;
+
+    .lucide-menu {
+      width: 20px;
+      height: 20px;
+      visibility: visible;
+      stroke: var(--darkgray);
+    }
   }
 
   .explorer .mobile-explorer.hide-until-loaded {
     display: none;
-  }
-
-  .explorer .mobile-explorer .lucide-menu {
-    stroke: var(--darkgray);
   }
 
   .explorer button.mobile-explorer {
@@ -375,11 +849,140 @@ footer ul li a[href*="github"] {
     overscroll-behavior: contain;
   }
 
-  .search {
-    flex-grow: 0.3;
+  .article-title + .content-meta {
+    margin-top: 0.4rem;
   }
 
-  .graph > .graph-outer {
-    width: 90%;
+  .page-header .breadcrumb-container {
+    margin-top: 0.25rem;
+  }
+
+  .breadcrumb-container:has(.breadcrumb-element:nth-child(2)) + .article-title {
+    margin-top: 0.5rem;
+  }
+
+  .breadcrumb-container:not(:has(.breadcrumb-element:nth-child(2))) + .article-title {
+    margin-top: 0;
+  }
+
+  .page-header .popover-hint > .article-title:first-child {
+    margin-top: 0;
+  }
+
+  .note-properties {
+    margin-bottom: 0.75rem;
+  }
+
+  .mobile-graph-disclosure {
+    margin-top: 0;
+
+    > summary {
+      display: flex;
+      min-height: 2.5rem;
+      align-items: center;
+      gap: 0.55rem;
+      box-sizing: border-box;
+      width: fit-content;
+      padding: 0.45rem 0;
+      color: var(--darkgray);
+      font-family: var(--bodyFont);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      &::before {
+        display: inline-block;
+        width: 0.45rem;
+        height: 0.45rem;
+        border-right: 2px solid var(--darkgray);
+        border-bottom: 2px solid var(--darkgray);
+        content: "";
+        transform: rotate(-45deg);
+        transition: transform 0.2s ease;
+      }
+
+      &:hover {
+        color: var(--dark);
+      }
+    }
+
+    &[open] > summary {
+      &::before {
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  .mobile-graph-slot > .graph {
+    width: min(100%, 256px);
+
+    > h3 {
+      display: none;
+    }
+
+    > .graph-outer {
+      width: 100%;
+      height: 250px;
+      margin: 0.25rem 0 0;
+      touch-action: pan-y;
+
+      > .graph-container {
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+@media all and (max-width: 1200px) {
+  .page > #quartz-body .sidebar.left:has(.explorer):has(.mobile-actions-menu.is-overflow) {
+    --mobile-overflow-actions-width: 34px;
+
+    grid-template-columns: 34px minmax(0, 1fr) var(--mobile-overflow-actions-width);
+    padding-right: 0;
+  }
+
+  .page
+    > #quartz-body
+    .sidebar.left:has(.explorer):has(.mobile-actions-menu.is-overflow):has(
+      > .flex-component > .mobile-toc
+    ) {
+    --mobile-overflow-actions-width: calc(34px * 2 + 0.25rem);
+  }
+
+  .page > #quartz-body .sidebar.left:has(.mobile-actions-menu.is-overflow) > .page-title {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .sidebar.left:has(.mobile-actions-menu.is-overflow) > .page-title a {
+    display: inline-flex;
+    width: max-content;
+    max-width: none;
+    overflow: visible;
+    text-overflow: clip;
+    transform: scale(var(--mobile-title-scale, 1));
+    transform-origin: left center;
+    transition: none;
+    white-space: nowrap;
+  }
+
+  .page > #quartz-body .sidebar.left.mobile-title-hidden:has(.mobile-actions-menu.is-overflow) {
+    grid-template-columns: 34px minmax(0, 1fr) var(--mobile-overflow-actions-width, 34px);
+
+    > .page-title {
+      visibility: hidden;
+      pointer-events: none;
+    }
+  }
+
+  .sidebar.left:has(.mobile-actions-menu.is-overflow) > .flex-component:has(.search) {
+    width: var(--mobile-overflow-actions-width, 34px);
+    min-width: var(--mobile-overflow-actions-width, 34px);
   }
 }

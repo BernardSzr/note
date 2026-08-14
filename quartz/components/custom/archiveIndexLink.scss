@@ -1,0 +1,30 @@
+.archive-index-nav {
+  display: none;
+}
+
+.flex-component > .archive-index-nav {
+  display: flex;
+  flex: 0 0 34px;
+  align-items: center;
+  justify-content: center;
+
+  > a {
+    display: inline-flex;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    color: var(--darkgray);
+    text-decoration: none;
+
+    &:hover,
+    &[aria-current="page"] {
+      color: var(--dark);
+    }
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}

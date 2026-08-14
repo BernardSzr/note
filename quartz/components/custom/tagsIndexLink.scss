@@ -1,0 +1,44 @@
+@use "../../styles/variables.scss" as *;
+
+.tags-index-nav {
+  display: none;
+}
+
+.flex-component > .tags-index-nav {
+  display: flex;
+  flex: 0 0 34px;
+  align-items: center;
+  justify-content: center;
+
+  > a {
+    display: inline-flex;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    color: var(--darkgray);
+    text-decoration: none;
+
+    &:hover,
+    &[aria-current="page"] {
+      color: var(--dark);
+    }
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media all and ($mobile) {
+  .flex-component > .tags-index-nav {
+    width: 34px;
+    flex-basis: 34px;
+
+    > a {
+      width: 34px;
+      height: 34px;
+    }
+  }
+}

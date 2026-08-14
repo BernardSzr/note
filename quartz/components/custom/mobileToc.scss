@@ -1,0 +1,117 @@
+@use "../../styles/variables.scss" as *;
+
+.mobile-toc {
+  display: none;
+}
+
+@media all and ($mobile) {
+  html.mobile-toc-open,
+  html.mobile-toc-open body {
+    overflow: hidden;
+  }
+
+  .mobile-toc {
+    display: flex;
+    flex: 0 0 34px;
+    align-self: center;
+  }
+
+  .mobile-toc-toggle,
+  .mobile-toc-close {
+    box-sizing: border-box;
+    display: inline-flex;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border: 0;
+    color: var(--darkgray);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .mobile-toc-toggle:hover,
+  .mobile-toc-close:hover {
+    color: var(--dark);
+  }
+
+  .mobile-toc-toggle svg,
+  .mobile-toc-close svg {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+  }
+
+  .mobile-toc-panel {
+    position: fixed;
+    z-index: 102;
+    inset: 0;
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100dvh;
+    padding: 1rem 1rem 2rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    color: var(--darkgray);
+    background-color: var(--light);
+    transform: translateX(-100vw);
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      transform 200ms ease,
+      visibility 200ms ease;
+  }
+
+  .mobile-toc-panel[aria-hidden="false"] {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .mobile-toc-panel-header {
+    display: flex;
+    min-height: 34px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .mobile-toc-panel-header h2 {
+    margin: 0;
+    color: var(--dark);
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .mobile-toc-list {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mobile-toc-list li {
+    margin: 0;
+  }
+
+  .mobile-toc-list a {
+    display: block;
+    padding: 0.35rem 0;
+    color: var(--gray);
+    font-weight: 400;
+    text-decoration: none;
+  }
+
+  .mobile-toc-list a:hover,
+  .mobile-toc-list a.in-view {
+    color: var(--dark);
+    font-weight: 400;
+  }
+
+  @for $depth from 0 through 6 {
+    .mobile-toc-list .depth-#{$depth} {
+      padding-left: calc(0.75rem * #{$depth});
+    }
+  }
+}
