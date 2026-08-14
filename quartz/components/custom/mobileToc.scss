@@ -48,14 +48,16 @@
     z-index: 102;
     inset: 0;
     box-sizing: border-box;
-    width: 100vw;
+    width: auto;
+    max-width: none;
     height: 100dvh;
-    padding: 1rem 1rem 2rem;
+    padding: clamp(0.5rem, 4vw, 1rem) clamp(0.5rem, 4vw, 1rem) 2rem;
+    overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
     color: var(--darkgray);
     background-color: var(--light);
-    transform: translateX(-100vw);
+    transform: translateX(-100%);
     visibility: hidden;
     pointer-events: none;
     transition:
@@ -70,21 +72,32 @@
   }
 
   .mobile-toc-panel-header {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 34px;
     min-height: 34px;
     align-items: center;
-    justify-content: space-between;
     margin-bottom: 1rem;
   }
 
   .mobile-toc-panel-header h2 {
+    min-width: 0;
     margin: 0;
     color: var(--dark);
     font-size: 1rem;
     font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  .mobile-toc-close {
+    justify-self: end;
   }
 
   .mobile-toc-list {
+    --mobile-toc-indent: clamp(0.25rem, 2vw, 0.75rem);
+
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
     max-width: 48rem;
     margin: 0 auto;
     padding: 0;
@@ -97,10 +110,12 @@
 
   .mobile-toc-list a {
     display: block;
+    min-width: 0;
     padding: 0.35rem 0;
     color: var(--gray);
     font-weight: 400;
     text-decoration: none;
+    overflow-wrap: anywhere;
   }
 
   .mobile-toc-list a:hover,
@@ -111,7 +126,7 @@
 
   @for $depth from 0 through 6 {
     .mobile-toc-list .depth-#{$depth} {
-      padding-left: calc(0.75rem * #{$depth});
+      padding-left: calc(var(--mobile-toc-indent) * #{$depth});
     }
   }
 }

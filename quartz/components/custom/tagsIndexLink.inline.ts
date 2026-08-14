@@ -8,7 +8,10 @@ type ToolbarState = {
   search: HTMLElement
   observer: ResizeObserver
   isOverflow: boolean
+  layoutMode?: MobileLayoutMode
 }
+
+type MobileLayoutMode = "desktop" | "expanded" | "compact" | "titleless" | "stacked"
 
 const toolbarStates = new Map<HTMLElement, ToolbarState>()
 const observedSidebars = new Set<HTMLElement>()
@@ -56,8 +59,31 @@ function setMenuOpen(menu: HTMLElement, open: boolean) {
 }
 
 function closeMenus() {
-  document.querySelectorAll<HTMLElement>(".mobile-actions-menu.open").forEach((menu) => {
+  document.querySelectorAll<HTMLElement>(".mobile-actions-menu").forEach((menu) => {
     setMenuOpen(menu, false)
+  })
+}
+
+function closeMobileTocs() {
+  document.querySelectorAll<HTMLElement>(".mobile-toc").forEach((toc) => {
+    toc.classList.remove("open")
+    const toggle = toc.querySelector<HTMLButtonElement>(".mobile-toc-toggle")
+    const panelId = toggle?.getAttribute("aria-controls")
+    const panel = panelId ? document.getElementById(panelId) : null
+
+    toggle?.setAttribute("aria-expanded", "false")
+    panel?.setAttribute("aria-hidden", "true")
+  })
+  document.documentElement.classList.remove("mobile-toc-open")
+}
+
+function closeSearchOverlays() {
+  document.querySelectorAll<HTMLElement>(".search-container.active").forEach((container) => {
+    container.classList.remove("active")
+    const search = container.closest<HTMLElement>(".search")
+    search?.querySelector<HTMLElement>(".search-button")?.setAttribute("aria-expanded", "false")
+    const sidebar = container.closest<HTMLElement>(".sidebar")
+    if (sidebar) sidebar.style.removeProperty("z-index")
   })
 }
 
@@ -67,6 +93,15 @@ function collapseMobileExplorers() {
     explorer.setAttribute("aria-expanded", "false")
   })
   document.documentElement.classList.remove("mobile-no-scroll")
+}
+
+function resetTransientMobileUi() {
+  closeMenus()
+  closeMobileTocs()
+  closeSearchOverlays()
+  collapseMobileExplorers()
+  document.querySelector<HTMLElement>("#quartz-body")?.classList.remove("lock-scroll")
+  document.dispatchEvent(new CustomEvent("mobile-ui-reset"))
 }
 
 function getExpandedItems(state: ToolbarState) {
@@ -97,10 +132,31 @@ function getAvailableWidth(state: ToolbarState) {
 
   // Overflow mode pins the toolbar to its persistent action column. Measure it with
   // the normal grid rules so a wider sidebar can move the actions back out.
+  const sidebar = state.toolbar.closest<HTMLElement>(".sidebar.left")
+  const wasStacked = sidebar?.classList.contains("mobile-toolbar-stacked") ?? false
+  if (wasStacked) sidebar?.classList.remove("mobile-toolbar-stacked")
   state.menu.classList.remove("is-overflow")
   const availableWidth = state.toolbar.clientWidth
   state.menu.classList.add("is-overflow")
+  if (wasStacked) sidebar?.classList.add("mobile-toolbar-stacked")
   return availableWidth
+}
+
+function getViewportWidth() {
+  return Math.min(window.innerWidth, document.documentElement.clientWidth || window.innerWidth)
+}
+
+function getAvailableHeaderWidth(sidebar: HTMLElement) {
+  return Math.min(getViewportWidth(), sidebar.getBoundingClientRect().width)
+}
+
+function getPersistentControlsWidth(state: ToolbarState, sidebar: HTMLElement) {
+  const explorerButton = sidebar.querySelector<HTMLElement>(".mobile-explorer")
+  const explorerWidth = explorerButton?.getBoundingClientRect().width || 34
+  const toolbarWidth = state.toolbar.getBoundingClientRect().width
+  const gap = Number.parseFloat(getComputedStyle(sidebar).columnGap) || 0
+
+  return explorerWidth + toolbarWidth + gap * 2
 }
 
 function placePersistentItems(state: ToolbarState) {
@@ -165,12 +221,39 @@ function updateMobileTitle(state: ToolbarState) {
   sidebar.classList.toggle("mobile-title-hidden", hidden)
 }
 
+function getLayoutMode(state: ToolbarState, sidebar: HTMLElement): MobileLayoutMode {
+  if (!mobileToolbarMedia.matches) return "desktop"
+  if (!state.isOverflow) return "expanded"
+  if (sidebar.classList.contains("mobile-toolbar-stacked")) return "stacked"
+  if (sidebar.classList.contains("mobile-title-hidden")) return "titleless"
+  return "compact"
+}
+
+function applyLayoutMode(state: ToolbarState, sidebar: HTMLElement) {
+  const shouldStack =
+    mobileToolbarMedia.matches &&
+    state.isOverflow &&
+    getAvailableHeaderWidth(sidebar) < getPersistentControlsWidth(state, sidebar)
+  sidebar.classList.toggle("mobile-toolbar-stacked", shouldStack)
+
+  updateMobileTitle(state)
+  const nextMode = getLayoutMode(state, sidebar)
+  if (state.layoutMode === nextMode) return
+
+  resetTransientMobileUi()
+  state.layoutMode = nextMode
+}
+
 function updateToolbar(state: ToolbarState) {
   if (!state.toolbar.isConnected) return
 
+  const sidebar = state.toolbar.closest<HTMLElement>(".sidebar.left")
+  if (!sidebar) return
+
   if (!mobileToolbarMedia.matches) {
     setOverflowMode(state, false)
-    updateMobileTitle(state)
+    sidebar.classList.remove("mobile-toolbar-stacked")
+    applyLayoutMode(state, sidebar)
     return
   }
 
@@ -178,7 +261,7 @@ function updateToolbar(state: ToolbarState) {
   const availableWidth = getAvailableWidth(state)
   const shouldOverflow = availableWidth < requiredWidth
   setOverflowMode(state, shouldOverflow)
-  updateMobileTitle(state)
+  applyLayoutMode(state, sidebar)
 }
 
 function getToolbarState(toolbar: HTMLElement, sidebar: HTMLElement) {
@@ -274,6 +357,18 @@ function schedulePlacement() {
   })
 }
 
+document.addEventListener(
+  "click",
+  (event) => {
+    const target = event.target
+    if (!(target instanceof Element)) return
+
+    // Search stops click propagation before the bubbling toolbar handler runs.
+    if (target.closest(".mobile-actions-menu-panel .search-button")) closeMenus()
+  },
+  { capture: true },
+)
+
 document.addEventListener("click", (event) => {
   const target = event.target
   if (!(target instanceof Element)) return
@@ -327,6 +422,9 @@ mobileToolbarMedia.addEventListener("change", (event) => {
   }
   schedulePlacement()
 })
+window.addEventListener("resize", schedulePlacement, { passive: true })
+window.visualViewport?.addEventListener("resize", schedulePlacement, { passive: true })
+document.addEventListener("mobile-ui-reconcile", schedulePlacement)
 placeToolbarActions()
 if (mobileToolbarMedia.matches) collapseMobileExplorers()
 document.fonts.ready.then(schedulePlacement)

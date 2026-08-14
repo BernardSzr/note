@@ -9,7 +9,8 @@
  */
 $breakpoints: (
   mobile: 1200px,
-  desktop: 1200px,
+  // Media ranges are inclusive, so a small epsilon keeps 1200px mobile-only.
+  desktop: 1200.02px,
 );
 
 $mobile: "(max-width: #{map.get($breakpoints, mobile)})";

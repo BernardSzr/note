@@ -65,6 +65,7 @@ document.addEventListener("keydown", (event) => {
 
 document.addEventListener("DOMContentLoaded", placeMobileTocs)
 document.addEventListener("prenav", closeMobileTocs)
+document.addEventListener("mobile-ui-reset", closeMobileTocs)
 document.addEventListener("nav", () => {
   closeMobileTocs()
   placeMobileTocs()

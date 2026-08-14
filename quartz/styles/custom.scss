@@ -623,6 +623,12 @@ footer ul li a[href*="github"] {
 
 // 移动端样式（≤1200px）- 覆盖插件硬编码的800px断点
 @media all and (max-width: 1200px) {
+  html.mobile-no-scroll,
+  html.mobile-no-scroll body {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
   // 隐藏右侧边栏
   .sidebar.right {
     display: none !important;
@@ -635,12 +641,56 @@ footer ul li a[href*="github"] {
 
   // 自定义移动端样式
   .page > #quartz-body {
-    padding: 0;
+    --mobile-page-gutter: clamp(0px, 8vw, 1rem);
+    --mobile-header-outset: calc(var(--mobile-page-gutter) / 2);
+
+    box-sizing: border-box;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding-inline: var(--mobile-page-gutter);
+    overflow-x: clip;
   }
 
   .center {
     box-sizing: border-box;
-    padding: 0 1rem;
+    width: 100%;
+    min-width: 0 !important;
+    max-width: 100%;
+    padding: 0;
+    overflow-x: clip;
+  }
+
+  .center > .page-header,
+  .center > article,
+  .center > .page-footer,
+  .page > #quartz-body > footer {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .center :is(pre, .table-container, .note-properties) {
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+
+  .note-properties {
+    min-width: 0;
+    overflow: hidden;
+
+    .note-properties-key,
+    .note-properties-value {
+      min-width: 0;
+      padding-right: clamp(0.35rem, 4vw, 0.8rem);
+      padding-left: clamp(0.35rem, 4vw, 0.8rem);
+      overflow-wrap: anywhere;
+    }
+
+    .note-properties-tags {
+      min-width: 0;
+      flex-wrap: wrap;
+    }
   }
 
   .sidebar.left {
@@ -714,16 +764,6 @@ footer ul li a[href*="github"] {
     padding-left: 1rem;
   }
 
-  // 覆盖插件硬编码的800px断点
-  .page > #quartz-body > :not(.sidebar.left:has(.explorer)) {
-    transition: transform 300ms ease-in-out;
-  }
-
-  .page > #quartz-body.lock-scroll > :not(.sidebar.left:has(.explorer)) {
-    transform: translateX(100dvw);
-    transition: transform 300ms ease-in-out;
-  }
-
   .page > #quartz-body .sidebar.left:has(.explorer) {
     box-sizing: border-box;
     position: sticky;
@@ -734,8 +774,11 @@ footer ul li a[href*="github"] {
     align-items: center;
     border-bottom: 1px solid color-mix(in srgb, var(--lightgray) 70%, transparent);
     background-color: var(--light);
+    width: calc(100% + var(--mobile-header-outset) + var(--mobile-header-outset));
+    max-width: none;
     padding: 5px 0;
-    margin: 0;
+    margin-block: 0;
+    margin-inline: calc(0px - var(--mobile-header-outset));
   }
 
   .sidebar.left > .page-title {
@@ -769,7 +812,7 @@ footer ul li a[href*="github"] {
     grid-row: 1;
     order: 0;
     height: initial;
-    overflow: hidden;
+    overflow: visible;
     flex-shrink: 0;
     align-self: flex-start;
     margin-top: auto;
@@ -779,22 +822,36 @@ footer ul li a[href*="github"] {
   .explorer .explorer-content {
     box-sizing: border-box;
     z-index: 100;
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: fixed;
+    inset: 0;
     margin-top: 0;
     background-color: var(--light);
-    max-width: 100vw;
-    width: 100vw;
-    transform: translateX(-100vw);
+    width: auto;
+    max-width: none;
+    transform: translateX(-100%);
     transition:
       transform 200ms ease,
       visibility 200ms ease;
-    overflow: hidden;
-    padding: 4rem 0 2rem 0;
-    height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 4rem clamp(0.5rem, 4vw, 1rem) 2rem;
+    height: auto;
     max-height: 100dvh;
     visibility: hidden;
+
+    > .explorer-ul,
+    .folder-container,
+    .folder-container > div,
+    .folder-button,
+    .folder-title {
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    .folder-title,
+    a {
+      overflow-wrap: anywhere;
+    }
   }
 
   .explorer .mobile-explorer {
@@ -832,7 +889,7 @@ footer ul li a[href*="github"] {
   }
 
   .explorer.collapsed > .explorer-content {
-    transform: translateX(-100vw);
+    transform: translateX(-100%);
     visibility: hidden;
   }
 
@@ -984,5 +1041,40 @@ footer ul li a[href*="github"] {
   .sidebar.left:has(.mobile-actions-menu.is-overflow) > .flex-component:has(.search) {
     width: var(--mobile-overflow-actions-width, 34px);
     min-width: var(--mobile-overflow-actions-width, 34px);
+  }
+
+  .page
+    > #quartz-body
+    .sidebar.left.mobile-toolbar-stacked:has(.explorer):has(.mobile-actions-menu.is-overflow) {
+    grid-template-columns: 34px minmax(0, 1fr);
+    grid-template-rows: 34px 34px;
+    row-gap: 0.25rem;
+    width: calc(100% + var(--mobile-header-outset) + var(--mobile-header-outset));
+    min-width: 0;
+    max-width: none;
+    overflow-x: clip;
+  }
+
+  .page > #quartz-body .sidebar.left.mobile-toolbar-stacked:has(.explorer) > .page-title {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .page
+    > #quartz-body
+    .sidebar.left.mobile-toolbar-stacked:has(.explorer)
+    > .flex-component:has(.search) {
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+    grid-column: auto;
+    grid-row: auto;
+    width: var(--mobile-overflow-actions-width, 34px);
+    min-width: var(--mobile-overflow-actions-width, 34px);
+    max-width: none;
+    justify-self: end;
   }
 }
