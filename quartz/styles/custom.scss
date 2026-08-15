@@ -944,6 +944,7 @@ footer ul li a[href*="github"] {
       gap: 0.55rem;
       box-sizing: border-box;
       width: fit-content;
+      margin-inline-start: 0.25rem;
       padding: 0.45rem 0;
       color: var(--darkgray);
       font-family: var(--bodyFont);
