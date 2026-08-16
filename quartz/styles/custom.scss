@@ -1,6 +1,19 @@
 @use "./variables.scss" as *;
 
 // put your custom CSS here!
+
+@media (hover: none) and (pointer: coarse) {
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  a:focus:not(:focus-visible),
+  button:focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
 article {
   font-weight: 300;
 }

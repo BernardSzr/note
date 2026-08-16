@@ -18,6 +18,7 @@
   border-radius: 6px;
   color: var(--darkgray);
   background: transparent;
+  -webkit-tap-highlight-color: transparent;
   text-decoration: none;
   transition:
     border-color 150ms ease,
@@ -40,8 +41,14 @@
   .article-navigation-link:hover {
     border-color: var(--gray);
     color: var(--darkgray);
-    background-color: color-mix(in srgb, var(--lightgray) 45%, transparent);
+    background-color: var(--highlight);
   }
+}
+
+.article-navigation-link:active {
+  border-color: var(--gray);
+  color: var(--darkgray);
+  background-color: var(--highlight);
 }
 
 .article-navigation-label {
